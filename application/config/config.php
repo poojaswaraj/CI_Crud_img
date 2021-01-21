@@ -23,7 +23,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 | a PHP script and you can easily do that on your own.
 |
 */
-$config['base_url'] = 'http://localhost/codeigniter-crud-test/';
+$config['base_url'] = 'http://localhost/test_code/codeigniter-crud-ecommercer/';
 
 /*
 |--------------------------------------------------------------------------

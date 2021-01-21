@@ -1,10 +1,10 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Book_model extends CI_Model
+class Sub_Category_model extends CI_Model
 {
 
-	var $table = 'books';
+	var $table = 'sub_category';
 
 
 	public function __construct()
@@ -14,9 +14,12 @@ class Book_model extends CI_Model
 	}
 
 
-public function get_all_books()
+public function get_all_books($id)
 {
-$this->db->from('books');
+$this->db->select('sub_category.id as ids,sub_category.*,category.*,category.id as cat_id');
+$this->db->from('sub_category');
+$this->db->where('category_id',$id);
+$this->db->join('category','sub_category.category_id=category.id');
 $query=$this->db->get();
 return $query->result(); 
 }
@@ -25,19 +28,19 @@ return $query->result();
 	public function get_by_id($id)
 	{
 		$this->db->from($this->table);
-		$this->db->where('book_id',$id);
+		$this->db->where('id',$id);
 		$query = $this->db->get();
 
 		return $query->row();
 	}
 
-	public function book_add($data)
+	public function Sub_Category_add($data)
 	{
 		$this->db->insert($this->table, $data);
 		return $this->db->insert_id();
 	}
 
-	public function book_update($where, $data)
+	public function Sub_Category_update($where, $data)
 	{
 		$this->db->update($this->table, $data, $where);
 		return $this->db->affected_rows();
@@ -46,13 +49,9 @@ return $query->result();
 	public function delete_by_id($id)
 	{
 
-		$query3 = $this->db->query("SELECT * FROM `books` where book_id=$id");
-		foreach ($query3->result() as $row){
 		
-		unlink('./assets/uploads/'.$row->upload_data);
-		} 
 		
-		$this->db->where('book_id', $id);
+		$this->db->where('id', $id);
 		$this->db->delete($this->table);
 	}
 
